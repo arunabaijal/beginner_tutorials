@@ -63,11 +63,12 @@ int main(int argc, char **argv) {
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::ServiceServer server = n.advertiseService("ModifyMessage", changeMessage);
 
-	double rate = 10;
+	double rate = atof(argv[1]);
   if (rate <= 0) {
   	ROS_ERROR_STREAM("Rate has to be positive!");
   	rate = 10;
 	}
+  ROS_INFO_STREAM("Publishing frequency is " << rate);
   ros::Rate loop_rate(rate);
 
   /**
