@@ -18,6 +18,7 @@ std::string message = "Greetings from Aruna! ";
 bool changeMessage(beginner_tutorials::ModifyMessage::Request &req,
 									beginner_tutorials::ModifyMessage::Response &res) {
 	message = req.changeString;
+	ROS_WARN_STREAM("Message being published changed!");
 	return true;
 }
 
@@ -62,7 +63,12 @@ int main(int argc, char **argv) {
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::ServiceServer server = n.advertiseService("ModifyMessage", changeMessage);
 
-  ros::Rate loop_rate(10);
+	double rate = 10;
+  if (rate <= 0) {
+  	ROS_ERROR_STREAM("Rate has to be positive!");
+  	rate = 10;
+	}
+  ros::Rate loop_rate(rate);
 
   /**
    * A count of how many messages we have sent. This is used to create
@@ -74,12 +80,12 @@ int main(int argc, char **argv) {
      * This is a message object. You stuff it with data, and then publish it.
      */
     std_msgs::String msg;
-
+		ROS_DEBUG_STREAM(" Count at " << count );
     std::stringstream ss;
     ss << message << count;  // custom message
     msg.data = ss.str();
 
-    ROS_INFO("%s", msg.data.c_str());
+    ROS_INFO_STREAM(msg.data.c_str());
 
     /**
      * The publish() function is how you send messages. The parameter
@@ -94,6 +100,7 @@ int main(int argc, char **argv) {
     loop_rate.sleep();
     ++count;
   }
+  ROS_FATAL_STREAM("Ros program exiting!");
   return 0;
 }
 
