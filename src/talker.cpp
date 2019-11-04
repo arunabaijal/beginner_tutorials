@@ -15,9 +15,15 @@
 
 std::string message = "Greetings from Aruna! ";
 
+/**
+ * @brief  ModifyMessage Service callback function
+ * @param  req   request data for service
+ * @param  res   response data for service
+ * @return bool
+ */
 bool changeMessage(beginner_tutorials::ModifyMessage::Request &req,
 									beginner_tutorials::ModifyMessage::Response &res) {
-	message = req.changeString;
+	message = req.changeString;	// Change message using service data
 	ROS_WARN_STREAM("Message being published changed!");
 	return true;
 }
@@ -63,9 +69,9 @@ int main(int argc, char **argv) {
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::ServiceServer server = n.advertiseService("ModifyMessage", changeMessage);
 
-	double rate = atof(argv[1]);
+	double rate = atof(argv[1]);	// input rate from program argument
   if (rate <= 0) {
-  	ROS_ERROR_STREAM("Rate has to be positive!");
+  	ROS_ERROR_STREAM("Rate has to be positive!");	// use relevant logging level
   	rate = 10;
 	}
   ROS_INFO_STREAM("Publishing frequency is " << rate);
@@ -83,8 +89,8 @@ int main(int argc, char **argv) {
     std_msgs::String msg;
 		ROS_DEBUG_STREAM(" Count at " << count );
     std::stringstream ss;
-    ss << message << count;  // custom message
-    msg.data = ss.str();
+    ss << message << count;
+    msg.data = ss.str();	// create message for publishing
 
     ROS_INFO_STREAM(msg.data.c_str());
 
