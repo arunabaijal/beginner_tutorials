@@ -35,3 +35,18 @@ In a third new terminal run the following commands for subscriber
 cd ~/catkin_ws/
 source ~/catkin_ws/devel/setup.bash 
 rosrun beginner_tutorials listener
+
+##Run using launch file
+After building the package
+Open a new terminal and run the following commands for master
+roscore
+
+Open a new terminal and run following command for both publisher and subscriber
+roslaunch beginner_tutorials talkerlistener.launch frequency:=1
+
+To run with default frequency of 10 use command
+roslaunch beginner_tutorials talkerlistener.launch
+
+##Changing message using service
+To change message being published open a new terminal and run following command while publisher is running
+rosservice call /ModifyMessage "Change message!"
