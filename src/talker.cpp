@@ -4,32 +4,35 @@
  *@brief This is the publisher class.
  *@copyright 2019 Aruna Baijal
  */
+/*M/////////////////////////////////////////////////////////////////////////////
 //Copyright 2019, Aruna
 //
-//Redistribution and use in source and binary forms, with or without modification,
-//are permitted provided that the following conditions are met:
+//Redistribution and use in source and binary forms, with or without
+//modification, are permitted provided that the following conditions are met:
 //
 //1. Redistributions of source code must retain the above copyright notice, this
 //list of conditions and the following disclaimer.
 //
 //2. Redistributions in binary form must reproduce the above copyright notice,
-//this list of conditions and the following disclaimer in the documentation and/or
-//other materials provided with the distribution.
+//this list of conditions and the following disclaimer in the documentation
+//and/or other materials provided with the distribution.
 //
 //3. Neither the name of the copyright holder nor the names of its contributors
 //may be used to endorse or promote products derived from this software without
 //specific prior written permission.
 //
-//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-//ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-//WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-//DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR
-//ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
-//(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
-//    LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON
-//ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-//(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-//SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+//AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+//IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+//DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+//FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+//DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+//SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+//CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+//OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+//OF THISSOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+//M*/
+
 #include <sstream>
 #include "ros/ros.h"
 #include "std_msgs/String.h"
@@ -39,7 +42,7 @@
  * This tutorial demonstrates simple sending of messages over the ROS system.
  */
 
-std::string message = "Greetings from Aruna! ";
+extern std::string message = "Greetings from Aruna! ";
 
 /**
  * @brief  ModifyMessage Service callback function
@@ -48,14 +51,19 @@ std::string message = "Greetings from Aruna! ";
  * @return bool
  */
 bool changeMessage(beginner_tutorials::ModifyMessage::Request &req,
-									beginner_tutorials::ModifyMessage::Response &res) {
-	message = req.changeString;	// Change message using service data
-	ROS_WARN_STREAM("Message being published changed!");
-	return true;
+                  beginner_tutorials::ModifyMessage::Response &res) {
+  message = req.changeString;  // Change message using service data
+  ROS_WARN_STREAM("Message being published changed!");
+  return true;
 }
 
+/**
+ * @brief  Main function for publishing data
+ * @param  argc   number of program arguments
+ * @param  argv   program arguments
+ * @return int
+ */
 int main(int argc, char **argv) {
-
   /**
    * The ros::init() function needs to see argc and argv so that it can perform
    * any ROS arguments and name remapping that were provided at the command line.
@@ -95,11 +103,11 @@ int main(int argc, char **argv) {
   ros::Publisher chatter_pub = n.advertise<std_msgs::String>("chatter", 1000);
   ros::ServiceServer server = n.advertiseService("ModifyMessage", changeMessage);
 
-	double rate = atof(argv[1]);	// input rate from program argument
+  double rate = atof(argv[1]);  // input rate from program argument
   if (rate <= 0) {
-  	ROS_ERROR_STREAM("Rate has to be positive!");	// use relevant logging level
-  	rate = 10;
-	}
+    ROS_ERROR_STREAM("Rate has to be positive!");  // use relevant logging level
+    rate = 10;
+  }
   ROS_INFO_STREAM("Publishing frequency is " << rate);
   ros::Rate loop_rate(rate);
 
@@ -113,10 +121,10 @@ int main(int argc, char **argv) {
      * This is a message object. You stuff it with data, and then publish it.
      */
     std_msgs::String msg;
-		ROS_DEBUG_STREAM(" Count at " << count );
+    ROS_DEBUG_STREAM(" Count at " << count);
     std::stringstream ss;
     ss << message << count;
-    msg.data = ss.str();	// create message for publishing
+    msg.data = ss.str();  //  create message for publishing
 
     ROS_INFO_STREAM(msg.data.c_str());
 
