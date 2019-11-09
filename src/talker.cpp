@@ -37,6 +37,7 @@
 #include "ros/ros.h"
 #include "std_msgs/String.h"
 #include "beginner_tutorials/ModifyMessage.h"
+#include "tf/transform_broadcaster.h"
 
 /**
  * This tutorial demonstrates simple sending of messages over the ROS system.
@@ -55,6 +56,17 @@ bool changeMessage(beginner_tutorials::ModifyMessage::Request &req,
   message = req.changeString;  // Change message using service data
   ROS_WARN_STREAM("Message being published changed!");
   return true;
+}
+
+
+void poseCallback(){
+  static tf::TransformBroadcaster br;
+  tf::Transform transform;
+  transform.setOrigin( tf::Vector3(10.0, 20.0, 30.0) );
+  tf::Quaternion q;
+  q.setRPY(1, 1, 0);
+  transform.setRotation(q);
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));
 }
 
 /**
@@ -135,7 +147,7 @@ int main(int argc, char **argv) {
      * in the constructor above.
      */
     chatter_pub.publish(msg);
-
+    poseCallback(); // call to broadcast tf
     ros::spinOnce();
 
     loop_rate.sleep();
