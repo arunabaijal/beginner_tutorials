@@ -64,14 +64,14 @@ bool changeMessage(beginner_tutorials::ModifyMessage::Request &req,
  * @param  none
  * @return none
  */
-void poseCallback(){
+void poseCallback() {
   static tf::TransformBroadcaster br;
   tf::Transform transform;
-  transform.setOrigin( tf::Vector3(10.0, 20.0, 30.0) ); // assign static value
+  transform.setOrigin(tf::Vector3(10.0, 20.0, 30.0));  // assign static value
   tf::Quaternion q;
   q.setRPY(1, 1, 0);
   transform.setRotation(q);
-  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk")); // broadcast /talk frame with parent /world
+  br.sendTransform(tf::StampedTransform(transform, ros::Time::now(), "world", "talk"));  // broadcast /talk frame with parent /world
 }
 
 /**

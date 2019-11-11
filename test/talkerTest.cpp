@@ -46,22 +46,21 @@
  * @param none
  * @return none
  */
-TEST(TestSuite, ServiceTest)
-{
+TEST(TestSuite, ServiceTest) {
   ros::NodeHandle n;
   ros::ServiceClient client = n.serviceClient<beginner_tutorials::ModifyMessage>(
       "ModifyMessage");
-  bool exists(client.waitForExistence(ros::Duration(5))); // checking for service existence
+  bool exists(client.waitForExistence(ros::Duration(5)));  // checking for service existence
   EXPECT_TRUE(exists);
 
   beginner_tutorials::ModifyMessage srv;
   srv.request.changeString = "Test String";
   client.call(srv.request, srv.response);
-  EXPECT_EQ("Test String", srv.response.changedString); // checking whether publishing string changed
+  EXPECT_EQ("Test String", srv.response.changedString);  // checking whether publishing string changed
 }
 
 // Run all the tests that were declared with TEST()
-int main(int argc, char **argv){
+int main(int argc, char **argv) {
   ros::init(argc, argv, "talkerTest");
   ::testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
