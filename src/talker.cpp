@@ -55,6 +55,7 @@ bool changeMessage(beginner_tutorials::ModifyMessage::Request &req,
                   beginner_tutorials::ModifyMessage::Response &res) {
   message = req.changeString;  // Change message using service data
   ROS_WARN_STREAM("Message being published changed!");
+  res.changedString = message;
   return true;
 }
 
